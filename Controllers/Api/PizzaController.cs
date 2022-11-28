@@ -19,7 +19,16 @@ namespace la_mia_pizzeria_static.Controllers.Api
 
         public IActionResult Get()
         {
-            List<Pizza> pizza = _pizzaRepository.AllWithoutRelationship();
+            List<Pizza> pizza = _pizzaRepository.All();
+            return Ok(pizza);
+
+        }
+
+        [HttpGet("{id:int}")]
+        public IActionResult Detail(int id)
+        {
+            Pizza pizza = _pizzaRepository.GetById(id);
+            
             return Ok(pizza);
 
         }

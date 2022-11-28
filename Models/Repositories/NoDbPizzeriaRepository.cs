@@ -62,5 +62,10 @@ namespace la_mia_pizzeria_static.Models.Repositories
 
             IngredientOnPizza(pizza, selectedIngredients);
         }
+
+        public Pizza GetByIdWithoutRelationship(int id)
+        {
+            return null;
+        }
     }
 }

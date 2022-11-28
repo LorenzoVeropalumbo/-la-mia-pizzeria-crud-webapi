@@ -9,6 +9,7 @@ namespace la_mia_pizzeria_static.Models.Repositories
         void Create(Pizza pizza, List<int> selectedIngredients);
         void Delete(Pizza pizza);
         Pizza GetById(int id);
+        Pizza GetByIdWithoutRelationship(int id);
         void Update(Pizza pizza, Pizza formData, List<int>? selectedIngredients);
     }
 }

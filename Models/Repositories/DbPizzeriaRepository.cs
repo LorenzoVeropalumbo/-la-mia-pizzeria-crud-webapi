@@ -51,6 +51,11 @@ namespace la_mia_pizzeria_static.Models.Repositories
             return db.Pizzas.Where(p => p.Id == id).Include(p => p.Category).Include(p => p.Ingredients).FirstOrDefault();
         }
 
+        public Pizza GetByIdWithoutRelationship(int id)
+        {
+            return db.Pizzas.Where(p => p.Id == id).FirstOrDefault();
+        }
+
         public void Update(Pizza pizza, Pizza formData, List<int>? selectedIngredients)
         {
             if (selectedIngredients == null)

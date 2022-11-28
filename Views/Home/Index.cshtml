@@ -32,6 +32,7 @@
             document.querySelector('.js_no_post').classList.add('d-none');
             document.querySelector('.js_post_table').innerHTML = '';
             res.data.forEach(pizza => {
+                console.log(pizza);
                 document.querySelector('.js_post_table').innerHTML +=
                 `
                     <div class="col">
@@ -39,7 +40,8 @@
                             <img src="${pizza.image}" />
                             <span class="line" />
                             <h3>${pizza.title}</h3>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">dwad</a>
+                            <h5>${pizza.category.title}</h5>
+                            <a href="https://localhost:7058/Home/Privacy" >dwad</a>
                             <p><span class="price">${pizza.price}</span></p>
                             </div>
                         </div>
