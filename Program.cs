@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 
-builder.Services.AddScoped<IdbPizzeriaRepository, NoDbPizzeriaRepository>();
+builder.Services.AddScoped<IdbPizzeriaRepository, DbPizzeriaRepository>();
 
 var app = builder.Build();
 
