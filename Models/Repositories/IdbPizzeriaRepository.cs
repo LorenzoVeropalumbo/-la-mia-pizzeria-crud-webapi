@@ -5,6 +5,7 @@ namespace la_mia_pizzeria_static.Models.Repositories
     public interface IdbPizzeriaRepository
     {
         List<Pizza> All();
+        public List<Pizza> AllWithoutRelationship();
         void Create(Pizza pizza, List<int> selectedIngredients);
         void Delete(Pizza pizza);
         Pizza GetById(int id);

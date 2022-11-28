@@ -21,6 +21,11 @@ namespace la_mia_pizzeria_static.Models.Repositories
             return db.Pizzas.Include(p => p.Category).Include(p => p.Ingredients).ToList();
         }
 
+        public List<Pizza> AllWithoutRelationship()
+        {
+            return db.Pizzas.ToList();
+        }
+
         public void Create(Pizza pizza, List<int> selectedIngredients)
         {
             pizza.Ingredients = new List<Ingredient>();
