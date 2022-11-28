@@ -12,9 +12,12 @@
         <h3>Non hai inserito alcun post</h3>
     </div>
 </div>
-
-<div class="row js_post_table d-none">
-    <!-- qui verranno mostrati gli elementi -->
+<div class="container-fluid text-center pizze_index">
+    <div class="row pe-4 align-items-center g-4">
+        <div class="row js_post_table d-none">
+            <!-- qui verranno mostrati gli elementi -->
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
@@ -42,7 +45,7 @@
                             <h3>${pizza.title}</h3>
                             <h5>${pizza.category.title}</h5>
                             <a href="https://localhost:7058/Home/Detail" >Vedi Dettaglio</a>
-                            <p><span class="price">${pizza.price}</span></p>
+                            <p><span class="price">${pizza.price}$</span></p>
                             </div>
                         </div>
                     </div>

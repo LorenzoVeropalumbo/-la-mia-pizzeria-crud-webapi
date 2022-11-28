@@ -21,11 +21,6 @@ namespace la_mia_pizzeria_static.Models.Repositories
             return db.Pizzas.Include(p => p.Category).Include(p => p.Ingredients).ToList();
         }
 
-        public List<Pizza> AllWithoutRelationship()
-        {
-            return db.Pizzas.ToList();
-        }
-
         public void Create(Pizza pizza, List<int> selectedIngredients)
         {
             pizza.Ingredients = new List<Ingredient>();
@@ -49,11 +44,6 @@ namespace la_mia_pizzeria_static.Models.Repositories
         public Pizza GetById(int id)
         {
             return db.Pizzas.Where(p => p.Id == id).Include(p => p.Category).Include(p => p.Ingredients).FirstOrDefault();
-        }
-
-        public Pizza GetByIdWithoutRelationship(int id)
-        {
-            return db.Pizzas.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public void Update(Pizza pizza, Pizza formData, List<int>? selectedIngredients)

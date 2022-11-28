@@ -12,11 +12,6 @@ namespace la_mia_pizzeria_static.Models.Repositories
             return Pizzas;
         }
 
-        public List<Pizza> AllWithoutRelationship()
-        {
-            return null;
-        }
-
         public void Create(Pizza pizza, List<int> selectedIngredients)
         {
             pizza.Id = Pizzas.Count;
@@ -61,11 +56,6 @@ namespace la_mia_pizzeria_static.Models.Repositories
 
 
             IngredientOnPizza(pizza, selectedIngredients);
-        }
-
-        public Pizza GetByIdWithoutRelationship(int id)
-        {
-            return null;
         }
     }
 }
