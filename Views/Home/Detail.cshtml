@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row js_post_table d-none">
+<div class="row js_post_table">
     <!-- qui verranno mostrati gli elementi -->
 </div>
 
@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
 
-    axios.get('/api/pizza/detail/1').then(res =>{
+    axios.get('/api/pizza/detail/2003').then(res =>{
         console.log(res);
         document.querySelector('.js_post_table').innerHTML +=
         `
@@ -19,14 +19,19 @@
                         <img src="${res.data.image}" />
                     <span class="line" />
                         <h3>${res.data.title}</h3>
+                        <div class="dd"></div>
                         <h5>${res.data.category.title}</h5>
                         <p>${res.data.description}</p>
                     <p><span class="price">${res.data.price}</span></p>
-                    <div class="dd"></div>
+                    
                     </div>
                 </div>
             </div>
-        `
+        `        
+        res.data.ingredients.forEach(ing => {
+            document.querySelector('.dd').innerHTML +=
+            `<h6>${ing.title}</h6>`
+        })
         ;
 
     }).catch(error => {
