@@ -6,37 +6,38 @@
     <!-- qui verranno mostrati gli elementi -->
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+@section Scripts{
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    axios.get(`/api/pizza/detail/${@Model}`).then(res => {
-        console.log(res);
-        document.querySelector('.js_post_table').innerHTML +=
-        `
-            <div class="col">
-                <div class="pizza_card">
-                        <img src="${res.data.image}" />
-                    <span class="line" />
-                        <h3>${res.data.title}</h3>
-                        <div class="dd"></div>
-                        <h5>${res.data.category.title}</h5>
-                        <p>${res.data.description}</p>
-                    <p><span class="price">${res.data.price}</span></p>
+        axios.get(`/api/pizza/detail/${@Model}`).then(res => {
+            console.log(res);
+            document.querySelector('.js_post_table').innerHTML +=
+            `
+                <div class="col">
+                    <div class="pizza_card">
+                            <img src="${res.data.image}" />
+                        <span class="line" />
+                            <h3>${res.data.title}</h3>
+                            <div class="dd"></div>
+                            <h5>${res.data.category.title}</h5>
+                            <p>${res.data.description}</p>
+                        <p><span class="price">${res.data.price}</span></p>
                     
+                        </div>
                     </div>
                 </div>
-            </div>
-        `        
-        res.data.ingredients.forEach(ing => {
-            document.querySelector('.dd').innerHTML +=
-            `<h6>${ing.title}</h6>`
+            `        
+            res.data.ingredients.forEach(ing => {
+                document.querySelector('.dd').innerHTML +=
+                `<h6>${ing.title}</h6>`
+            })
+            ;
+
+        }).catch(error => {
+
+            console.log(error);
         })
-        ;
 
-    }).catch(error => {
-
-        console.log(error);
-    })
-
-</script>
+    </script>
+}
