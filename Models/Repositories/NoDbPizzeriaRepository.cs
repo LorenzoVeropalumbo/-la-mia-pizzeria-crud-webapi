@@ -57,5 +57,10 @@ namespace la_mia_pizzeria_static.Models.Repositories
 
             IngredientOnPizza(pizza, selectedIngredients);
         }
+
+        public List<Pizza> SearchByTitle(string? title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
