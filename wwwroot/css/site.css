@@ -113,3 +113,17 @@ main{
     color: orange;
 }
 
+.search_input{
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+.search_input input{
+    margin: auto;
+    width: 310px;
+}
+
+.card_link a{
+    text-decoration: none;
+    color: inherit;
+}
