@@ -6,6 +6,10 @@
    <h1>La mia homepage</h1>
 </div>
 
+<div class="mb-5 search_input">
+    <input id="user_search" type="text" class="js_search" list="user_search_list" />
+    <datalist id="user_search_list"><option value="42">The answer</option></datalist>
+</div>
 
 <div class="row js_no_post text-center d-none">
     <div class="col-12">
@@ -20,41 +24,74 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
 
-<script type="text/javascript">
+@section Scripts{
 
-    axios.get('/api/pizza/get').then(res =>{
-        if (res.data.length == 0) {
-            document.querySelector('.js_no_post').classList.remove('d-none');
-            document.querySelector('.js_post_table').classList.add('d-none');
-        } 
-        else
-        {
-            document.querySelector('.js_post_table').classList.remove('d-none');
-            document.querySelector('.js_no_post').classList.add('d-none');
-            document.querySelector('.js_post_table').innerHTML = '';
-            res.data.forEach(pizza => {
-                console.log(pizza);
-                document.querySelector('.js_post_table').innerHTML +=
-                `
-                    <div class="col">
-                        <div class="pizza_card">
-                            <img src="${pizza.image}" />
-                            <span class="line" />
-                            <h3>${pizza.title}</h3>
-                            <h5>${pizza.category.title}</h5>
-                            <a href="https://localhost:7058/Home/Detail" >Vedi Dettaglio</a>
-                            <p><span class="price">${pizza.price}$</span></p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
+    <script type="text/javascript">
+
+        document.querySelector(".js_search").addEventListener('keyup', OnUserInputEvent);
+
+        var timeoutId = null;
+        function OnUserInputEvent(e) {
+            let query = e.target.value;
+
+            if (timeoutId != null){
+                clearTimeout(timeoutId);
+            }
+        
+            timeoutId = setTimeout(() => {
+                axios.get('/api/pizza/search', {
+                    params: {
+                        title: query
+                    }
+                }).then(response => {
+                    RenderPizzas(response.data);
+                }).catch(error => {
+                    console.log(error);
+                })
+
+            }, 300);
         }
-    }).catch(error => {
-        debugger;
-        console.log(error);
-    })
+    
+        axios.get('/api/pizza/get').then(res =>{
+                RenderPizzas(res.data);
+        }).catch(error => {
+            debugger;
+            console.log(error);
+        });
+     
+        function RenderPizzas(data){
+            if (data.length == 0) {
+                document.querySelector('.js_no_post').classList.remove('d-none');
+                document.querySelector('.js_post_table').classList.add('d-none');
+            } 
+            else
+            {
+                document.querySelector('.js_post_table').classList.remove('d-none');
+                document.querySelector('.js_no_post').classList.add('d-none');
+                document.querySelector('.js_post_table').innerHTML = '';
+                document.querySelector('#user_search').innerHTML = '';
+                data.forEach(pizza => {
+                    console.log(pizza);
+                    document.querySelector('.js_post_table').innerHTML +=
+                    `
+                    <div class="col">
+                        <div class="pizza_card card_link">
+                            <a href="Home/Detail/${pizza.id}">
+                                <img src="${pizza.image}" />
+                                <span class="line" />
+                                <h3>${pizza.title}</h3>
+                                <h5>${pizza.category.title}</h5>
+                                <p><span class="price">${pizza.price}$</span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>               
+                    `;
+                    document.getElementById('user_search').innerHTML += `<option value="${pizza.id}">${pizza.title}</option>`;
+                });
+            }
+        }
 
-</script>
+    </script>
+}

@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@model int
 <div class="row js_post_table">
     <!-- qui verranno mostrati gli elementi -->
 </div>
@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
 
-    axios.get('/api/pizza/detail/2003').then(res =>{
+    axios.get(`/api/pizza/detail/${@Model}`).then(res => {
         console.log(res);
         document.querySelector('.js_post_table').innerHTML +=
         `
