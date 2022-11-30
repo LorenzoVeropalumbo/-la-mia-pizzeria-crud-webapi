@@ -9,6 +9,7 @@ builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 
 builder.Services.AddScoped<IdbPizzeriaRepository, DbPizzeriaRepository>();
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
