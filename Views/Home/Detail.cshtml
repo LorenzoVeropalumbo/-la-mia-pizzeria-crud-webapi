@@ -2,10 +2,39 @@
     ViewData["Title"] = "Home Page";
 }
 @model int
-<div class="row js_post_table">
-    <!-- qui verranno mostrati gli elementi -->
-</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9 js_post_table">
+            <!-- qui verranno mostrati gli elementi -->
+        </div>
+          
+        <div class="col-3 js_comments">
+            <div class="comments_list">
+            </div>
+            <hr />
+            <div class="img_detail">
+                <h4 class="text_weight">Aggiungi un commento</h4>
+                <form onsubmit="inviaCommento(event)">
+                    <div class="mb-3">
+                        <label for="contact-name" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="contact-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact-title" class="form-label">Titolo</label>
+                        <input type="text" class="form-control" id="contact-title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact-description" class="form-label">Commento</label>
+                        <textarea class="form-control" id="contact-description" rows="10"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Invia" />
+                </form>
+            </div>
 
+        </div>
+    </div>
+
+</div>
 @section Scripts{
 
     <script type="text/javascript">
@@ -14,30 +43,64 @@
             console.log(res);
             document.querySelector('.js_post_table').innerHTML +=
             `
-                <div class="col">
-                    <div class="pizza_card">
-                            <img src="${res.data.image}" />
-                        <span class="line" />
-                            <h3>${res.data.title}</h3>
-                            <div class="dd"></div>
-                            <h5>${res.data.category.title}</h5>
-                            <p>${res.data.description}</p>
-                        <p><span class="price">${res.data.price}</span></p>
-                    
-                        </div>
+                    <div class="detail_pizza">
+                        <div class="img_detail"><img src="${res.data.image}" /></div>                           
+                        <h3 class="text-center">${res.data.title}</h3>
+                        <div class="dd img_detail"></div>
+                        <h5 class="text-center">${res.data.category.title}</h5>
+                        <p class="text-center">${res.data.description}</p>
+                        <p class="text-center"><span class="price">${res.data.price}$</span></p>
                     </div>
-                </div>
             `        
             res.data.ingredients.forEach(ing => {
                 document.querySelector('.dd').innerHTML +=
-                `<h6>${ing.title}</h6>`
-            })
-            ;
-
+                    `<h6 class="me-2 tag_ing">${ing.title} </h6>`
+            });
+            res.data.comments.forEach(Comment => {
+                document.querySelector('.comments_list').innerHTML +=
+                    `
+                        <div class="comment_body">
+                            <h6 class="text_weight">${Comment.name}</h6>
+                            <h6 class="text_weight">${Comment.title}</h6>
+                            <p>${Comment.description}</p>
+                            <button onclick="deleteComment(${Comment.id})">Elimina</button>
+                        <div>
+                    `
+            });
+            
         }).catch(error => {
 
             console.log(error);
-        })
+        });
+
+        function inviaCommento(e) {
+
+            e.preventDefault();
+            axios.post('/api/comment', {
+
+                name: document.querySelector('#contact-name').value,
+                title: document.querySelector('#contact-title').value,
+                description: document.querySelector('#contact-description').value,
+                pizzaid: @Model,
+            }).then(res => {
+                swal("Messaggio inserito correttamente!", "success");
+                document.querySelector('#contact-name').value = '';
+                document.querySelector('#contact-title').value = '';
+                document.querySelector('#contact-description').value = '';
+                location.reload();
+            }).catch(error => {
+                console.log(error.response.data.errors)
+            })
+        }
+
+        function deleteComment(id){
+            axios.delete(`/api/comment/${id}`).then(res => {
+                console.log(res);
+                location.reload();
+            }).catch(error => {
+                console.log(error.response.data.errors)
+            })
+        }
 
     </script>
 }

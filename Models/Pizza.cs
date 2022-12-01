@@ -34,6 +34,9 @@ namespace la_mia_pizzeria_static.Models
         //relazione n a n con Ingredients
         public List<Ingredient>? Ingredients { get; set; }
 
+        //relazione n a n con Comments
+        public List<Comment>? Comments { get; set; }
+        
         public Pizza()
         {
 

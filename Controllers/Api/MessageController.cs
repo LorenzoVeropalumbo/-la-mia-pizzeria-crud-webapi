@@ -15,6 +15,7 @@ namespace la_mia_pizzeria_static.Controllers.Api
         {
             db = _db;
         }
+        
         [HttpPost]
         // public void Post(Message message) equivalente anche senza [FormBody]
         public IActionResult Create([FromBody] Message message)
