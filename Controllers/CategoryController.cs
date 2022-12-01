@@ -3,9 +3,11 @@ using la_mia_pizzeria_static.Models.FormData;
 using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace la_mia_pizzeria_static.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         public PizzaDbContext db;

@@ -3,6 +3,7 @@ using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.FormData;
 using la_mia_pizzeria_static.Models.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace la_mia_pizzeria_static.Controllers
 {
+    [Authorize]
     public class PizzaController : Controller
     {
         public PizzaDbContext db;

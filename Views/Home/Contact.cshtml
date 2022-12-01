@@ -1,9 +1,11 @@
 ﻿<div>
     <div class="col-12 mt-5">
+        <div class="alert alert-danger error d-none" role="alert"></div>
         <form onsubmit="inviaMessaggio(event)" >
             <div class="mb-3">
                 <label for="contact-email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="contact-email">
+                <div class="Email"></div>
             </div>
             <div class="mb-3">
                 <label for="contact-name" class="form-label">Nome</label>
@@ -34,13 +36,18 @@
                 title: document.querySelector('#contact-title').value,
                 text: document.querySelector('#contact-text').value,
            }).then(res =>{
-
+                document.querySelector('.error').classList.add('d-none');
                 swal("Messaggio inserito correttamente!","success");
                 document.querySelector('#contact-title').value = '';
                 document.querySelector('#contact-text').value = '';
            }).catch(error =>{
-                
-                console.log(error.response.data.errors);
+                document.querySelector('.error').classList.remove('d-none');
+               document.querySelector('.error').innerHTML = '';
+               for (const key in error.response.data.errors) {
+                    console.log(`${key}: ${error.response.data.errors[key]}`);
+                    document.querySelector('.error').innerHTML += ` <h4><i class="fa-solid fa-circle mr-1" style="font-size: 8px;vertical-align: middle;"></i> <span style="font-size: 18px;">${key}: ${error.response.data.errors[key]}</span></h4>`
+               }
+               
            })
         }
     </script>
