@@ -6,7 +6,12 @@ namespace la_mia_pizzeria_static.Controllers
 {
     public class IngredientController : Controller
     {
-        public PizzaDbContext db = new PizzaDbContext();
+        public PizzaDbContext db;
+
+        public IngredientController(PizzaDbContext _db)
+        {
+            db = _db;
+        }
 
         public IActionResult Index()
         {

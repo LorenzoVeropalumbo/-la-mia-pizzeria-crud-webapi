@@ -8,7 +8,12 @@ namespace la_mia_pizzeria_static.Controllers
 {
     public class CategoryController : Controller
     {
-        public PizzaDbContext db = new PizzaDbContext();
+        public PizzaDbContext db;
+
+        public CategoryController(PizzaDbContext _db)
+        {
+            db = _db;
+        }
 
         public IActionResult Index()
         {
