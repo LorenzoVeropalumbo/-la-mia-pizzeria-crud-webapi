@@ -17,6 +17,19 @@ namespace la_mia_pizzeria_static.Controllers.Api
             db = _db;
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(long id)
+        {
+            Comment comment = db.Comments.Where(p => p.Id == id).FirstOrDefault();
+
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(comment);
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] Comment comment)
         {
@@ -36,32 +49,19 @@ namespace la_mia_pizzeria_static.Controllers.Api
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutTodoItem(long id, Comment comment)
+        public IActionResult PutTodoItem(int id, Comment commentToUpdate)
         {
+            Comment comment = db.Comments.Where(p => p.Id == id).FirstOrDefault();
             if (id != comment.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(todoItem).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TodoItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            comment.Title = commentToUpdate.Title;
+            comment.Description = commentToUpdate.Description;
+            comment.Name = commentToUpdate.Name;
+            db.Comments.Update(comment);
+            db.SaveChanges();
+            return Ok();
         }
 
         [HttpDelete("{id}")]

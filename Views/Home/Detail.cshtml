@@ -12,7 +12,7 @@
             <div class="comments_list">
             </div>
             <hr />
-            <div class="img_detail">
+            <div class="add_comment">
                 <h4 class="text_weight">Aggiungi un commento</h4>
                 <form onsubmit="inviaCommento(event)">
                     <div class="mb-3">
@@ -27,6 +27,25 @@
                         <label for="contact-description" class="form-label">Commento</label>
                         <textarea class="form-control" id="contact-description" rows="10"></textarea>
                     </div>
+                    <input type="submit" class="btn btn-primary" value="Invia" />
+                </form>
+            </div>
+            <div class="modify_comment d-none">
+                <h4 class="text_weight">Modifica un commento</h4>
+                <form onsubmit="ModifyComment(event)">
+                    <div class="mb-3">
+                        <label for="contact-name" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="contact-name-m">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact-title" class="form-label">Titolo</label>
+                        <input type="text" class="form-control" id="contact-title-m">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact-description" class="form-label">Commento</label>
+                        <textarea class="form-control" id="contact-description-m" rows="10"></textarea>
+                    </div>
+                    <input type="text" class="form-control d-none" id="id-comment-m">
                     <input type="submit" class="btn btn-primary" value="Invia" />
                 </form>
             </div>
@@ -59,11 +78,12 @@
             res.data.comments.forEach(Comment => {
                 document.querySelector('.comments_list').innerHTML +=
                     `
-                        <div class="comment_body">
+                        <div class="comment_body ${Comment.id}">
                             <h6 class="text_weight">${Comment.name}</h6>
                             <h6 class="text_weight">${Comment.title}</h6>
                             <p>${Comment.description}</p>
                             <button onclick="deleteComment(${Comment.id})">Elimina</button>
+                            <button onclick="GetCommentValue(${Comment.id})">Modifica</button>
                         <div>
                     `
             });
@@ -92,6 +112,39 @@
                 console.log(error.response.data.errors)
             })
         }
+
+        function GetCommentValue(id) {
+            document.querySelector('.modify_comment').classList.remove('d-none');
+            document.querySelector('.add_comment').classList.add('d-none');
+            axios.get(`/api/comment/${id}`).then(res => {
+                console.log(res);
+                document.querySelector('#contact-name-m').value = res.data.name;
+                document.querySelector('#contact-title-m').value = res.data.title;
+                document.querySelector('#contact-description-m').value = res.data.description;
+                document.querySelector('#id-comment-m').value =  res.data.id;
+            }).catch(error => {
+                console.log(error.response.data.errors)
+            })
+        }
+
+        function ModifyComment(e){
+            e.preventDefault();
+            var id = document.querySelector('#id-comment-m').value;
+            axios.put(`/api/comment/${id}`, {
+                name: document.querySelector('#contact-name-m').value,
+                title: document.querySelector('#contact-title-m').value,
+                description: document.querySelector('#contact-description-m').value,
+                pizzaid: @Model,
+            }).then(res => {
+                swal("Messaggio modificato correttamente!", "success");
+                document.querySelector('.modify_comment').classList.add('d-none');
+                document.querySelector('.add_comment').classList.remove('d-none');
+                location.reload();
+            }).catch(error => {
+                console.log(error.response.data.errors)
+            })
+        }
+
 
         function deleteComment(id){
             axios.delete(`/api/comment/${id}`).then(res => {
